@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.RectF;
 import android.graphics.Region;
 import android.os.Build;
 import android.support.annotation.Nullable;
@@ -25,8 +24,6 @@ public class FillableView extends View {
     public static final int START_RIGHT = 2;
     public static final int START_BOTTOM = 3;
 
-    private static RectF rectF = new RectF();
-
     private int fillColor = Color.WHITE;
     private int startPosition = START_LEFT;
 
@@ -36,8 +33,6 @@ public class FillableView extends View {
     private int width;
     private int height;
 
-    private final Path progressPath = new Path();
-    private final Region progressRegion = new Region();
     private final Region region = new Region();
 
     public FillableView(Context context) {
@@ -85,26 +80,15 @@ public class FillableView extends View {
     private void computeCroppedProgressPath() {
         if (startPosition == START_RIGHT) {
             region.set((int) (width * (1F - percent)), 0, width, height);
-            setRectPath(progressPath, width * (1F - percent), 0, width, height);
         } else if (startPosition == START_LEFT) {
             region.set(0, 0, (int) (width * percent), height);
-            setRectPath(progressPath, 0, 0, width * percent, height);
         } else if (startPosition == START_TOP) {
             region.set(0, 0, width, (int) (height * percent));
-            setRectPath(progressPath, 0, 0, width, height * percent);
         } else if (startPosition == START_BOTTOM) {
             region.set(0, (int) (height * (1F - percent)), width, height);
-            setRectPath(progressPath, 0, height * (1F - percent), width, height);
         }
-        progressRegion.setPath(progressPath, region);
         croppedProgressPath.rewind();
-        progressRegion.getBoundaryPath(croppedProgressPath);
-    }
-
-    private void setRectPath(Path path, float left, float top, float right, float bottom) {
-        rectF.set(left, top, right, bottom);
-        path.rewind();
-        path.addRect(rectF, Path.Direction.CW);
+        region.getBoundaryPath(croppedProgressPath);
     }
 
     @Override
