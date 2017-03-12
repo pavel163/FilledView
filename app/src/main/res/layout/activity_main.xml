@@ -60,6 +60,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:padding="32dp"
-        android:progress="60" />
+        android:progress="50" />
 
 </LinearLayout>

@@ -84,17 +84,17 @@ public class FillableView extends View {
 
     private void computeCroppedProgressPath() {
         if (startPosition == START_RIGHT) {
-            region.set((int) (width * percent), 0, width, height);
-            setRectPath(progressPath, width * percent, 0, width, height);
+            region.set((int) (width * (1F - percent)), 0, width, height);
+            setRectPath(progressPath, width * (1F - percent), 0, width, height);
         } else if (startPosition == START_LEFT) {
             region.set(0, 0, (int) (width * percent), height);
             setRectPath(progressPath, 0, 0, width * percent, height);
-        } else if (startPosition == START_TOP){
+        } else if (startPosition == START_TOP) {
             region.set(0, 0, width, (int) (height * percent));
             setRectPath(progressPath, 0, 0, width, height * percent);
-        } else if (startPosition == START_BOTTOM){
-            region.set(0, (int) (height * percent), width, height);
-            setRectPath(progressPath, 0, height * percent, width, height);
+        } else if (startPosition == START_BOTTOM) {
+            region.set(0, (int) (height * (1F - percent)), width, height);
+            setRectPath(progressPath, 0, height * (1F - percent), width, height);
         }
         progressRegion.setPath(progressPath, region);
         croppedProgressPath.rewind();
