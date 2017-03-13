@@ -19,8 +19,6 @@ import android.view.View;
 
 public class FillableView extends View {
 
-    private static final String SCHEMA = "http://schemas.android.com/apk/res/android";
-
     public static final int START_LEFT = 0;
     public static final int START_TOP = 1;
     public static final int START_RIGHT = 2;
@@ -42,9 +40,6 @@ public class FillableView extends View {
     private Path progressStrokePath = new Path();
     private Rect textBounds = new Rect();
 
-    private String widthType;
-    private String heightType;
-    //helpers
     private final Region region = new Region();
     private final Region textRegion = new Region();
 
@@ -64,9 +59,6 @@ public class FillableView extends View {
 
     private void initAttrs(@Nullable AttributeSet attrs) {
         if (attrs != null) {
-            heightType = attrs.getAttributeValue(SCHEMA, "layout_height");
-            widthType = attrs.getAttributeValue(SCHEMA, "layout_width");
-
             TypedArray a = getContext().getTheme().obtainStyledAttributes(
                     attrs,
                     R.styleable.FillableView,
@@ -109,11 +101,7 @@ public class FillableView extends View {
         if (widthMode == View.MeasureSpec.EXACTLY) {
             width = widthSize;
         } else if (widthMode == View.MeasureSpec.AT_MOST) {
-            if (widthType.equals("-1")) {
-                width = widthSize;
-            } else {
-                width = textWidth;
-            }
+            width = Math.min(textWidth, widthSize);
         } else {
             width = textWidth;
         }
@@ -121,11 +109,7 @@ public class FillableView extends View {
         if (heightMode == View.MeasureSpec.EXACTLY) {
             height = heightSize;
         } else if (heightMode == View.MeasureSpec.AT_MOST) {
-            if (heightType.equals("-1")) {
-                height = heightSize;
-            } else {
-                height = textHeight;
-            }
+            height = Math.min(textHeight, heightSize);
         } else {
             height = textHeight;
         }
