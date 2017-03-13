@@ -12,47 +12,53 @@
 
     <com.ebr163.view.FillableView
         android:id="@+id/fillable_view_left"
-        android:layout_width="wrap_content"
-        android:layout_height="120dp"
+        android:layout_width="320dp"
+        android:layout_height="320dp"
         app:fill_color="@color/colorAccent"
-        app:start_position="left" />
+        app:start_position="left"
+        app:textSize="24sp"
+        app:radius="10dp"
+        app:text="asdsadasas" />
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TOP" />
+    <!--<TextView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="TOP" />-->
 
-    <com.ebr163.view.FillableView
-        android:id="@+id/fillable_view_top"
-        android:layout_width="wrap_content"
-        android:layout_height="120dp"
-        app:fill_color="@color/colorAccent"
-        app:start_position="top" />
+    <!--<com.ebr163.view.FillableView-->
+    <!--android:id="@+id/fillable_view_top"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="120dp"-->
+    <!--app:fill_color="@color/colorAccent"-->
+    <!--app:start_position="top"-->
+    <!--app:text="XAXA" />-->
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="RIGHT" />
+    <!--<TextView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="RIGHT" />-->
 
 
-    <com.ebr163.view.FillableView
-        android:id="@+id/fillable_view_right"
-        android:layout_width="wrap_content"
-        android:layout_height="120dp"
-        app:fill_color="@color/colorAccent"
-        app:start_position="right" />
+    <!--<com.ebr163.view.FillableView-->
+    <!--android:id="@+id/fillable_view_right"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="120dp"-->
+    <!--app:fill_color="@color/colorAccent"-->
+    <!--app:start_position="right"-->
+    <!--app:text="XAXA" />-->
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="BOTTOM" />
+    <!--<TextView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="BOTTOM" />-->
 
-    <com.ebr163.view.FillableView
-        android:id="@+id/fillable_view_bottom"
-        android:layout_width="wrap_content"
-        android:layout_height="120dp"
-        app:fill_color="@color/colorAccent"
-        app:start_position="bottom" />
+    <!--<com.ebr163.view.FillableView-->
+    <!--android:id="@+id/fillable_view_bottom"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="120dp"-->
+    <!--app:fill_color="@color/colorAccent"-->
+    <!--app:start_position="bottom"-->
+    <!--app:text="XAXA" />-->
 
     <SeekBar
         android:id="@+id/seekBar"

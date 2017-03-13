@@ -8,5 +8,8 @@
             <enum name="right" value="2"/>
             <enum name="bottom" value="3"/>
         </attr>
+        <attr name="text" format="string" />
+        <attr name="textSize" format="dimension" />
+        <attr name="radius" format="dimension" />
     </declare-styleable>
 </resources>
