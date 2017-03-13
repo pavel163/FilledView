@@ -1,7 +1,6 @@
 package com.ebr163.view;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -28,7 +27,7 @@ public class FillableView extends View {
     public static final int START_BOTTOM = 3;
 
     private int startPosition = START_LEFT;
-    private int fillColor = Color.WHITE;
+    private int fillColor = Color.BLACK;
     private String text;
     private int radius = 0;
     private int textSize;
@@ -48,7 +47,6 @@ public class FillableView extends View {
     //helpers
     private final Region region = new Region();
     private final Region textRegion = new Region();
-    private final Region progressStrokeRegion = new Region();
 
     public FillableView(Context context) {
         this(context, null);
@@ -60,8 +58,6 @@ public class FillableView extends View {
 
     public FillableView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        final Resources res = context.getResources();
-        textSize = res.getDimensionPixelSize(R.dimen.defaultTextSize);
         initAttrs(attrs);
         initText();
     }
@@ -76,10 +72,11 @@ public class FillableView extends View {
                     R.styleable.FillableView,
                     0, 0);
             try {
-                fillColor = a.getColor(R.styleable.FillableView_fill_color, Color.WHITE);
+                fillColor = a.getColor(R.styleable.FillableView_fill_color, Color.BLACK);
                 startPosition = a.getInteger(R.styleable.FillableView_start_position, 0);
                 text = a.getString(R.styleable.FillableView_text);
-                textSize = a.getDimensionPixelSize(R.styleable.FillableView_textSize, textSize);
+                textSize = a.getDimensionPixelSize(R.styleable.FillableView_textSize,
+                        getContext().getResources().getDimensionPixelSize(R.dimen.defaultTextSize));
                 radius = a.getDimensionPixelSize(R.styleable.FillableView_radius, 0);
             } finally {
                 a.recycle();
@@ -177,7 +174,6 @@ public class FillableView extends View {
             region.set(0, (int) (height * (1F - percent)), width, height);
         }
         region.setPath(progressStrokePath, region); // INTER
-        progressStrokeRegion.setPath(progressStrokePath, region);
         textRegion.setPath(textPath, region);
         region.op(textRegion, Region.Op.DIFFERENCE); // DIFFERENCE
         croppedProgressPath.rewind();

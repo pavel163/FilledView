@@ -31,6 +31,7 @@
         android:layout_width="320dp"
         android:layout_height="120dp"
         app:fill_color="@color/colorAccent"
+        app:radius="10dp"
         app:start_position="top"
         app:text="TEST" />
 
@@ -45,6 +46,7 @@
         android:layout_width="320dp"
         android:layout_height="120dp"
         app:fill_color="@color/colorAccent"
+        app:radius="10dp"
         app:start_position="right"
         app:text="TEST" />
 
@@ -58,6 +60,7 @@
         android:layout_width="320dp"
         android:layout_height="120dp"
         app:fill_color="@color/colorAccent"
+        app:radius="10dp"
         app:start_position="bottom"
         app:text="TEST" />
 
