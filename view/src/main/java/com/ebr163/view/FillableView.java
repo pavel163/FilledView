@@ -79,7 +79,7 @@ public class FillableView extends View {
                 fillColor = a.getColor(R.styleable.FillableView_fill_color, Color.WHITE);
                 startPosition = a.getInteger(R.styleable.FillableView_start_position, 0);
                 text = a.getString(R.styleable.FillableView_text);
-                textSize = a.getDimensionPixelSize(R.styleable.FillableView_textSize, 0);
+                textSize = a.getDimensionPixelSize(R.styleable.FillableView_textSize, textSize);
                 radius = a.getDimensionPixelSize(R.styleable.FillableView_radius, 0);
             } finally {
                 a.recycle();
@@ -167,7 +167,15 @@ public class FillableView extends View {
     }
 
     public void computeCroppedProgressPath() {
-        region.set(0, 0, (int) (width * percent), height);
+        if (startPosition == START_RIGHT) {
+            region.set((int) (width * (1F - percent)), 0, width, height);
+        } else if (startPosition == START_LEFT) {
+            region.set(0, 0, (int) (width * percent), height);
+        } else if (startPosition == START_TOP) {
+            region.set(0, 0, width, (int) (height * percent));
+        } else if (startPosition == START_BOTTOM) {
+            region.set(0, (int) (height * (1F - percent)), width, height);
+        }
         region.setPath(progressStrokePath, region); // INTER
         progressStrokeRegion.setPath(progressStrokePath, region);
         textRegion.setPath(textPath, region);
@@ -177,7 +185,15 @@ public class FillableView extends View {
     }
 
     public void computeCroppedTextPath() {
-        region.set((int) (width * percent), 0, width, height);
+        if (startPosition == START_RIGHT) {
+            region.set(0, 0, (int) (width * (1F - percent)), height);
+        } else if (startPosition == START_LEFT) {
+            region.set((int) (width * percent), 0, width, height);
+        } else if (startPosition == START_TOP) {
+            region.set(0, (int) (height * percent), width, height);
+        } else if (startPosition == START_BOTTOM) {
+            region.set(0, 0, width, (int) (height * (1F - percent)));
+        }
         textRegion.setPath(textPath, region); // INTERSECT
         croppedTextPath.rewind();
         textRegion.getBoundaryPath(croppedTextPath);
