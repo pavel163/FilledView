@@ -7,11 +7,12 @@
 
     <com.ebr163.view.FilledView
         android:id="@+id/fillable_view_left"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"
-        app:border_size="1dp"
+        android:layout_width="300dp"
+        android:layout_height="150dp"
+        android:layout_centerInParent="true"
         app:fill_color="@color/colorAccent"
-        app:radius="10dp"
+        app:radius="50dp"
+        app:border_show="true"
         app:start_mode="left"
         app:text="TEST"
         app:textSize="24sp" />

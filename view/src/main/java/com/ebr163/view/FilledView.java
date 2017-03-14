@@ -38,7 +38,7 @@ public class FilledView extends View {
     private String text;
     private int radius = 0;
     private int textSize;
-    private float borderSize;
+    private boolean isShowBorder;
 
     private final Path textPath = new Path();
     private final Path croppedProgressPath = new Path();
@@ -80,7 +80,7 @@ public class FilledView extends View {
                 textSize = a.getDimensionPixelSize(R.styleable.FilledView_textSize,
                         getContext().getResources().getDimensionPixelSize(R.dimen.defaultTextSize));
                 radius = a.getDimensionPixelSize(R.styleable.FilledView_radius, 0);
-                borderSize = a.getDimension(R.styleable.FilledView_border_size, 0f);
+                isShowBorder = a.getBoolean(R.styleable.FilledView_border_show, false);
             } finally {
                 a.recycle();
             }
@@ -141,7 +141,7 @@ public class FilledView extends View {
         Path roundRectPath = new Path();
         RectF rectF = new RectF();
         rectF.set(left, top, right, bottom);
-        roundRectPath.addRoundRect(rectF, radius, radius, Path.Direction.CW);
+        roundRectPath.addRoundRect(rectF, radius, radius, Path.Direction.CCW);
         return roundRectPath;
     }
 
@@ -155,7 +155,7 @@ public class FilledView extends View {
         } else if (startPosition == StartMode.BOTTOM.getMode()) {
             region.set(0, (int) (height * (1F - percent)), width, height);
         }
-        region.setPath(progressStrokePath, region); // INTER
+        region.setPath(progressStrokePath, region);
         textRegion.setPath(textPath, region);
         region.op(textRegion, Region.Op.DIFFERENCE);
         croppedProgressPath.rewind();
@@ -182,9 +182,8 @@ public class FilledView extends View {
         super.onDraw(canvas);
         paint.setColor(fillColor);
 
-        if (borderSize > 0f) {
+        if (isShowBorder) {
             paint.setStyle(Paint.Style.STROKE);
-            paint.setStrokeWidth(borderSize);
             canvas.drawPath(progressStrokePath, paint);
         }
 
@@ -211,8 +210,8 @@ public class FilledView extends View {
         requestLayout();
     }
 
-    public void setBorderSize(int borderSize) {
-        this.borderSize = borderSize;
+    public void showBorder(boolean flag) {
+        isShowBorder = flag;
         invalidate();
     }
 
