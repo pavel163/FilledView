@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 filledViewLeft.setProgress(progress / 100F);
+                filledViewLeft.setRadius(progress);
             }
 
             @Override

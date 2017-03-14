@@ -39,6 +39,7 @@ public class FilledView extends View {
     private int radius = 0;
     private int textSize;
     private boolean isShowBorder;
+    private int borderSize = 1;
 
     private final Path textPath = new Path();
     private final Path croppedProgressPath = new Path();
@@ -138,11 +139,13 @@ public class FilledView extends View {
     }
 
     private Path getRoundRectPath(float left, float top, float right, float bottom, float radius) {
+        region.set((int) left, (int) top, (int) right, (int) bottom);
         Path roundRectPath = new Path();
         RectF rectF = new RectF();
-        rectF.set(left, top, right, bottom);
+        rectF.set(left + borderSize, top + borderSize, right - borderSize, bottom - borderSize);
         roundRectPath.addRoundRect(rectF, radius, radius, Path.Direction.CCW);
-        return roundRectPath;
+        region.setPath(roundRectPath, region);
+        return region.getBoundaryPath();
     }
 
     public void computeCroppedProgressPath() {
@@ -184,6 +187,7 @@ public class FilledView extends View {
 
         if (isShowBorder) {
             paint.setStyle(Paint.Style.STROKE);
+            paint.setStrokeWidth(borderSize);
             canvas.drawPath(progressStrokePath, paint);
         }
 
