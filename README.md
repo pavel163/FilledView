@@ -45,7 +45,7 @@ Additonal optional attributes:
 
 Other configurable APIs:
 
-* `public void setProgress(float percent)`, set progress ('percent >= 0f && percent <= 1f')
+* `public void setProgress(float percent)`, set progress (`percent >= 0f && percent <= 1f`)
 * `public void setFillColor(int color)`
 * `public void setText(String text)`
 * `public void showBorder(boolean value)`
