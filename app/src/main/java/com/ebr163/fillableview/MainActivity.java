@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
     private Random rnd = new Random();
     private FilledView filledViewLeft;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,7 +49,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 filledViewLeft.setProgress(progress / 100F);
-                filledViewLeft.setRadius(progress);
             }
 
             @Override
