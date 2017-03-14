@@ -29,6 +29,7 @@ public class FilledView extends View {
     private String text;
     private int radius = 0;
     private int textSize;
+    private float borderSize;
 
     private final Path textPath = new Path();
     private final Path croppedProgressPath = new Path();
@@ -70,6 +71,7 @@ public class FilledView extends View {
                 textSize = a.getDimensionPixelSize(R.styleable.FilledView_textSize,
                         getContext().getResources().getDimensionPixelSize(R.dimen.defaultTextSize));
                 radius = a.getDimensionPixelSize(R.styleable.FilledView_radius, 0);
+                borderSize = a.getDimension(R.styleable.FilledView_border_size, 0f);
             } finally {
                 a.recycle();
             }
@@ -157,9 +159,8 @@ public class FilledView extends View {
         } else if (startPosition == START_BOTTOM) {
             region.set(0, (int) (height * (1F - percent)), width, height);
         }
-        region.setPath(progressStrokePath, region); // INTER
         textRegion.setPath(textPath, region);
-        region.op(textRegion, Region.Op.DIFFERENCE); // DIFFERENCE
+        region.op(textRegion, Region.Op.DIFFERENCE);
         croppedProgressPath.rewind();
         region.getBoundaryPath(croppedProgressPath);
     }
@@ -183,8 +184,12 @@ public class FilledView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         paint.setColor(fillColor);
-        paint.setStyle(Paint.Style.STROKE);
-        canvas.drawPath(progressStrokePath, paint);
+
+        if (borderSize > 0f) {
+            paint.setStyle(Paint.Style.STROKE);
+            paint.setStrokeWidth(borderSize);
+            canvas.drawPath(progressStrokePath, paint);
+        }
 
         paint.setStyle(Paint.Style.FILL);
         canvas.drawPath(croppedProgressPath, paint);

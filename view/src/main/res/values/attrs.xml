@@ -11,5 +11,6 @@
         <attr name="text" format="string" />
         <attr name="textSize" format="dimension" />
         <attr name="radius" format="dimension" />
+        <attr name="border_size" format="dimension" />
     </declare-styleable>
 </resources>

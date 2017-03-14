@@ -14,6 +14,7 @@
         app:radius="10dp"
         app:start_position="left"
         app:text="TEST"
+        app:border_size="1dp"
         app:textSize="24sp" />
 
     <SeekBar
