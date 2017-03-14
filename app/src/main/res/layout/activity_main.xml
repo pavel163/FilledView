@@ -6,7 +6,7 @@
     android:gravity="center_horizontal">
 
 
-    <com.ebr163.view.FillableView
+    <com.ebr163.view.FilledView
         android:id="@+id/fillable_view_left"
         android:layout_width="match_parent"
         android:layout_height="300dp"

@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.SeekBar;
 
-import com.ebr163.view.FillableView;
+import com.ebr163.view.FilledView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,8 +14,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         SeekBar seekbar = (SeekBar) findViewById(R.id.seekBar);
-        final FillableView fillableViewLeft = (FillableView) findViewById(R.id.fillable_view_left);
-        fillableViewLeft.setProgress(seekbar.getProgress() / 100F);
+        final FilledView filledViewLeft = (FilledView) findViewById(R.id.fillable_view_left);
+        filledViewLeft.setProgress(seekbar.getProgress() / 100F);
 
 //        final FillableView fillableViewTop = (FillableView) findViewById(R.id.fillable_view_top);
 //        fillableViewTop.setProgress(seekbar.getProgress() / 100F);
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                fillableViewLeft.setProgress(progress / 100F);
+                filledViewLeft.setProgress(progress / 100F);
 //                fillableViewTop.setProgress(progress / 100F);
 //                fillableViewRight.setProgress(progress / 100F);
 //                fillableViewBottom.setProgress(progress / 100F);

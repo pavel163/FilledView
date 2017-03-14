@@ -17,7 +17,7 @@ import android.view.View;
  * Created by ergashev on 12.03.17.
  */
 
-public class FillableView extends View {
+public class FilledView extends View {
 
     public static final int START_LEFT = 0;
     public static final int START_TOP = 1;
@@ -43,15 +43,15 @@ public class FillableView extends View {
     private final Region region = new Region();
     private final Region textRegion = new Region();
 
-    public FillableView(Context context) {
+    public FilledView(Context context) {
         this(context, null);
     }
 
-    public FillableView(Context context, @Nullable AttributeSet attrs) {
+    public FilledView(Context context, @Nullable AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public FillableView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public FilledView(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initAttrs(attrs);
         initText();
@@ -61,15 +61,15 @@ public class FillableView extends View {
         if (attrs != null) {
             TypedArray a = getContext().getTheme().obtainStyledAttributes(
                     attrs,
-                    R.styleable.FillableView,
+                    R.styleable.FilledView,
                     0, 0);
             try {
-                fillColor = a.getColor(R.styleable.FillableView_fill_color, Color.BLACK);
-                startPosition = a.getInteger(R.styleable.FillableView_start_position, 0);
-                text = a.getString(R.styleable.FillableView_text);
-                textSize = a.getDimensionPixelSize(R.styleable.FillableView_textSize,
+                fillColor = a.getColor(R.styleable.FilledView_fill_color, Color.BLACK);
+                startPosition = a.getInteger(R.styleable.FilledView_start_position, 0);
+                text = a.getString(R.styleable.FilledView_text);
+                textSize = a.getDimensionPixelSize(R.styleable.FilledView_textSize,
                         getContext().getResources().getDimensionPixelSize(R.dimen.defaultTextSize));
-                radius = a.getDimensionPixelSize(R.styleable.FillableView_radius, 0);
+                radius = a.getDimensionPixelSize(R.styleable.FilledView_radius, 0);
             } finally {
                 a.recycle();
             }
