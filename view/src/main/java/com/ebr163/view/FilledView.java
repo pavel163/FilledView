@@ -144,6 +144,16 @@ public class FilledView extends View {
         }
     }
 
+    public void setFillColor(int color) {
+        this.fillColor = color;
+        invalidate();
+    }
+
+    public void setText(String text) {
+        this.text = text;
+        requestLayout();
+    }
+
     private void computePaths() {
         computeCroppedProgressPath();
         computeCroppedTextPath();
@@ -159,6 +169,7 @@ public class FilledView extends View {
         } else if (startPosition == START_BOTTOM) {
             region.set(0, (int) (height * (1F - percent)), width, height);
         }
+        region.setPath(progressStrokePath, region); // INTER
         textRegion.setPath(textPath, region);
         region.op(textRegion, Region.Op.DIFFERENCE);
         croppedProgressPath.rewind();

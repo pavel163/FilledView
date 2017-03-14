@@ -5,25 +5,52 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal">
 
-
     <com.ebr163.view.FilledView
         android:id="@+id/fillable_view_left"
         android:layout_width="match_parent"
         android:layout_height="300dp"
+        app:border_size="1dp"
         app:fill_color="@color/colorAccent"
         app:radius="10dp"
         app:start_position="left"
         app:text="TEST"
-        app:border_size="1dp"
         app:textSize="24sp" />
 
-    <SeekBar
-        android:layout_alignParentBottom="true"
-        android:id="@+id/seekBar"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:padding="32dp"
-        android:progress="50" />
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <EditText
+                android:id="@+id/text"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/changeColorBtn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:padding="32dp"
+            android:progress="50" />
+
+    </LinearLayout>
 
 </RelativeLayout>
