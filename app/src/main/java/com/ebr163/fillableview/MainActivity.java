@@ -3,6 +3,9 @@ package com.ebr163.fillableview;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
@@ -29,6 +32,14 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
                 filledViewLeft.setFillColor(color);
+            }
+        });
+
+        Button changeTextButton = (Button) findViewById(R.id.changeTextBtn);
+        changeTextButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int color = Color.argb(255, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256));
                 filledViewLeft.setText(String.valueOf(color));
             }
         });
@@ -51,5 +62,32 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.left:
+                filledViewLeft.setStartMode(FilledView.StartMode.LEFT);
+                return true;
+            case R.id.top:
+                filledViewLeft.setStartMode(FilledView.StartMode.TOP);
+                return true;
+            case R.id.right:
+                filledViewLeft.setStartMode(FilledView.StartMode.RIGHT);
+                return true;
+            case R.id.bottom:
+                filledViewLeft.setStartMode(FilledView.StartMode.BOTTOM);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

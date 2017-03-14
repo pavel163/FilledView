@@ -19,12 +19,21 @@ import android.view.View;
 
 public class FilledView extends View {
 
-    public static final int START_LEFT = 0;
-    public static final int START_TOP = 1;
-    public static final int START_RIGHT = 2;
-    public static final int START_BOTTOM = 3;
+    public enum StartMode {
+        LEFT(0), TOP(1), RIGHT(2), BOTTOM(3);
 
-    private int startPosition = START_LEFT;
+        private int mode;
+
+        StartMode(int mode) {
+            this.mode = mode;
+        }
+
+        public int getMode() {
+            return mode;
+        }
+    }
+
+    private int startPosition = 0;
     private int fillColor = Color.BLACK;
     private String text;
     private int radius = 0;
@@ -66,7 +75,7 @@ public class FilledView extends View {
                     0, 0);
             try {
                 fillColor = a.getColor(R.styleable.FilledView_fill_color, Color.BLACK);
-                startPosition = a.getInteger(R.styleable.FilledView_start_position, 0);
+                startPosition = a.getInteger(R.styleable.FilledView_start_mode, 0);
                 text = a.getString(R.styleable.FilledView_text);
                 textSize = a.getDimensionPixelSize(R.styleable.FilledView_textSize,
                         getContext().getResources().getDimensionPixelSize(R.dimen.defaultTextSize));
@@ -136,37 +145,14 @@ public class FilledView extends View {
         return roundRectPath;
     }
 
-    public void setProgress(float percent) {
-        if (percent >= 0f && percent <= 1F) {
-            this.percent = percent;
-            computePaths();
-            invalidate();
-        }
-    }
-
-    public void setFillColor(int color) {
-        this.fillColor = color;
-        invalidate();
-    }
-
-    public void setText(String text) {
-        this.text = text;
-        requestLayout();
-    }
-
-    private void computePaths() {
-        computeCroppedProgressPath();
-        computeCroppedTextPath();
-    }
-
     public void computeCroppedProgressPath() {
-        if (startPosition == START_RIGHT) {
+        if (startPosition == StartMode.RIGHT.getMode()) {
             region.set((int) (width * (1F - percent)), 0, width, height);
-        } else if (startPosition == START_LEFT) {
+        } else if (startPosition == StartMode.LEFT.getMode()) {
             region.set(0, 0, (int) (width * percent), height);
-        } else if (startPosition == START_TOP) {
+        } else if (startPosition == StartMode.TOP.getMode()) {
             region.set(0, 0, width, (int) (height * percent));
-        } else if (startPosition == START_BOTTOM) {
+        } else if (startPosition == StartMode.BOTTOM.getMode()) {
             region.set(0, (int) (height * (1F - percent)), width, height);
         }
         region.setPath(progressStrokePath, region); // INTER
@@ -177,16 +163,16 @@ public class FilledView extends View {
     }
 
     public void computeCroppedTextPath() {
-        if (startPosition == START_RIGHT) {
+        if (startPosition == StartMode.RIGHT.getMode()) {
             region.set(0, 0, (int) (width * (1F - percent)), height);
-        } else if (startPosition == START_LEFT) {
+        } else if (startPosition == StartMode.LEFT.getMode()) {
             region.set((int) (width * percent), 0, width, height);
-        } else if (startPosition == START_TOP) {
+        } else if (startPosition == StartMode.TOP.getMode()) {
             region.set(0, (int) (height * percent), width, height);
-        } else if (startPosition == START_BOTTOM) {
+        } else if (startPosition == StartMode.BOTTOM.getMode()) {
             region.set(0, 0, width, (int) (height * (1F - percent)));
         }
-        textRegion.setPath(textPath, region); // INTERSECT
+        textRegion.setPath(textPath, region);
         croppedTextPath.rewind();
         textRegion.getBoundaryPath(croppedTextPath);
     }
@@ -205,5 +191,48 @@ public class FilledView extends View {
         paint.setStyle(Paint.Style.FILL);
         canvas.drawPath(croppedProgressPath, paint);
         canvas.drawPath(croppedTextPath, paint);
+    }
+
+    public void setProgress(float percent) {
+        if (percent >= 0f && percent <= 1F) {
+            this.percent = percent;
+            computePaths();
+            invalidate();
+        }
+    }
+
+    public void setFillColor(int color) {
+        this.fillColor = color;
+        invalidate();
+    }
+
+    public void setText(String text) {
+        this.text = text;
+        requestLayout();
+    }
+
+    public void setBorderSize(int borderSize) {
+        this.borderSize = borderSize;
+        invalidate();
+    }
+
+    public void setTextSize(int textSize) {
+        this.textSize = textSize;
+        requestLayout();
+    }
+
+    public void setRadius(int radius) {
+        this.radius = radius;
+        requestLayout();
+    }
+
+    public void setStartMode(StartMode startPosition) {
+        this.startPosition = startPosition.getMode();
+        requestLayout();
+    }
+
+    private void computePaths() {
+        computeCroppedProgressPath();
+        computeCroppedTextPath();
     }
 }

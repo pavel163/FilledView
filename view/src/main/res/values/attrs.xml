@@ -2,7 +2,7 @@
 <resources>
     <declare-styleable name="FilledView">
         <attr name="fill_color" format="color" />
-        <attr name="start_position" format="enum">
+        <attr name="start_mode" format="enum">
             <enum name="left" value="0"/>
             <enum name="top" value="1"/>
             <enum name="right" value="2"/>

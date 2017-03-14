@@ -12,7 +12,7 @@
         app:border_size="1dp"
         app:fill_color="@color/colorAccent"
         app:radius="10dp"
-        app:start_position="left"
+        app:start_mode="left"
         app:text="TEST"
         app:textSize="24sp" />
 
@@ -29,13 +29,15 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/text"
+            <Button
+                android:text="change text"
+                android:id="@+id/changeTextBtn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
             <Button
+                android:text="change color"
                 android:id="@+id/changeColorBtn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
