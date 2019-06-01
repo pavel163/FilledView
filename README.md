@@ -1,4 +1,4 @@
-# FilledView
+# FilledView 
 
 ![Showcase](https://github.com/pavel163/FilledView/blob/master/files/gif1.gif)
 ![Showcase](https://github.com/pavel163/FilledView/blob/master/files/gif2.gif)
@@ -19,7 +19,7 @@ dependencies {
 }
 ```
 
-## How to use
+## How to use (MIN API 19)
 
 ```xml
 <com.ebr163.view.FilledView
