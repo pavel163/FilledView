@@ -2,13 +2,14 @@ package com.ebr163.fillableview;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.ebr163.view.FilledView;
 
@@ -23,9 +24,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        filledViewLeft = (FilledView) findViewById(R.id.fillable_view_left);
+        filledViewLeft = findViewById(R.id.fillable_view_left);
 
-        Button changeColorButton = (Button) findViewById(R.id.changeColorBtn);
+        Button changeColorButton = findViewById(R.id.changeColorBtn);
         changeColorButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        Button changeTextButton = (Button) findViewById(R.id.changeTextBtn);
+        Button changeTextButton = findViewById(R.id.changeTextBtn);
         changeTextButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -43,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        SeekBar seekbar = (SeekBar) findViewById(R.id.seekBar);
+        SeekBar seekbar = findViewById(R.id.seekBar);
         filledViewLeft.setProgress(seekbar.getProgress() / 100F);
         seekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
