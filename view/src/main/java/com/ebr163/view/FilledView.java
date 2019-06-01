@@ -8,10 +8,10 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.RectF;
-import android.graphics.Region;
-import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+
+import androidx.annotation.Nullable;
 
 /**
  * Created by ergashev on 12.03.17.
@@ -22,7 +22,7 @@ public class FilledView extends View {
     public enum StartMode {
         LEFT(0), TOP(1), RIGHT(2), BOTTOM(3);
 
-        private int mode;
+        private final int mode;
 
         StartMode(int mode) {
             this.mode = mode;
@@ -40,19 +40,19 @@ public class FilledView extends View {
     private int textSize;
     private boolean isShowBorder;
     private int borderSize = 1;
-
-    private final Path textPath = new Path();
-    private final Path croppedProgressPath = new Path();
-    private final Path croppedTextPath = new Path();
-    private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
     private int width;
     private int height;
     private float percent = 0.1F;
-    private Path progressStrokePath = new Path();
-    private Rect textBounds = new Rect();
 
-    private final Region region = new Region();
-    private final Region textRegion = new Region();
+    private final RectF rectF = new RectF();
+    private final Path textPath = new Path();
+    private final Path croppedTextPath = new Path();
+    private final Path progressPath = new Path();
+    private final Path croppedProgressPath = new Path();
+    private final Path progressStrokePath = new Path();
+
+    private final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+    private final Rect textBounds = new Rect();
 
     public FilledView(Context context) {
         this(context, null);
@@ -132,52 +132,37 @@ public class FilledView extends View {
         if (text != null) {
             paint.getTextPath(text, 0, text.length(), cx, cy, textPath);
         }
-        progressStrokePath = getRoundRectPath(0, 0, width, height, radius);
-
-        computePaths();
+        initRoundRectPath(0, 0, width, height, radius);
+        createPaths();
         setMeasuredDimension(width, height);
     }
 
-    private Path getRoundRectPath(float left, float top, float right, float bottom, float radius) {
-        region.set((int) left, (int) top, (int) right, (int) bottom);
-        Path roundRectPath = new Path();
-        RectF rectF = new RectF();
+    private void createPaths() {
+        if (startPosition == StartMode.RIGHT.getMode()) {
+            setRectPath(progressPath, width * (1F - percent), 0, width, height);
+        } else if (startPosition == StartMode.LEFT.getMode()) {
+            setRectPath(progressPath, 0, 0, width * percent, height);
+        } else if (startPosition == StartMode.TOP.getMode()) {
+            setRectPath(progressPath, 0, 0, width, height * percent);
+        } else if (startPosition == StartMode.BOTTOM.getMode()) {
+            setRectPath(progressPath, 0, height * (1F - percent), width, height);
+        }
+        croppedProgressPath.op(progressPath, textPath, Path.Op.DIFFERENCE);
+        croppedProgressPath.op(progressStrokePath, Path.Op.INTERSECT);
+
+        croppedTextPath.op(textPath, progressPath, Path.Op.DIFFERENCE);
+    }
+
+    private void initRoundRectPath(float left, float top, float right, float bottom, float radius) {
+        progressStrokePath.reset();
         rectF.set(left + borderSize, top + borderSize, right - borderSize, bottom - borderSize);
-        roundRectPath.addRoundRect(rectF, radius, radius, Path.Direction.CCW);
-        region.setPath(roundRectPath, region);
-        return region.getBoundaryPath();
+        progressStrokePath.addRoundRect(rectF, radius, radius, Path.Direction.CW);
     }
 
-    public void computeCroppedProgressPath() {
-        if (startPosition == StartMode.RIGHT.getMode()) {
-            region.set((int) (width * (1F - percent)), 0, width, height);
-        } else if (startPosition == StartMode.LEFT.getMode()) {
-            region.set(0, 0, (int) (width * percent), height);
-        } else if (startPosition == StartMode.TOP.getMode()) {
-            region.set(0, 0, width, (int) (height * percent));
-        } else if (startPosition == StartMode.BOTTOM.getMode()) {
-            region.set(0, (int) (height * (1F - percent)), width, height);
-        }
-        region.setPath(progressStrokePath, region);
-        textRegion.setPath(textPath, region);
-        region.op(textRegion, Region.Op.DIFFERENCE);
-        croppedProgressPath.rewind();
-        region.getBoundaryPath(croppedProgressPath);
-    }
-
-    public void computeCroppedTextPath() {
-        if (startPosition == StartMode.RIGHT.getMode()) {
-            region.set(0, 0, (int) (width * (1F - percent)), height);
-        } else if (startPosition == StartMode.LEFT.getMode()) {
-            region.set((int) (width * percent), 0, width, height);
-        } else if (startPosition == StartMode.TOP.getMode()) {
-            region.set(0, (int) (height * percent), width, height);
-        } else if (startPosition == StartMode.BOTTOM.getMode()) {
-            region.set(0, 0, width, (int) (height * (1F - percent)));
-        }
-        textRegion.setPath(textPath, region);
-        croppedTextPath.rewind();
-        textRegion.getBoundaryPath(croppedTextPath);
+    public void setRectPath(Path path, float left, float top, float right, float bottom) {
+        rectF.set(left, top, right, bottom);
+        path.rewind();
+        path.addRect(rectF, Path.Direction.CW);
     }
 
     @Override
@@ -199,7 +184,7 @@ public class FilledView extends View {
     public void setProgress(float percent) {
         if (percent >= 0f && percent <= 1F) {
             this.percent = percent;
-            computePaths();
+            createPaths();
             invalidate();
         }
     }
@@ -214,8 +199,8 @@ public class FilledView extends View {
         requestLayout();
     }
 
-    public void showBorder(boolean flag) {
-        isShowBorder = flag;
+    public void showBorder(boolean isShowBorder) {
+        this.isShowBorder = isShowBorder;
         invalidate();
     }
 
@@ -229,13 +214,13 @@ public class FilledView extends View {
         requestLayout();
     }
 
-    public void setStartMode(StartMode startPosition) {
-        this.startPosition = startPosition.getMode();
+    public void setBorderSize(int borderSize){
+        this.borderSize = borderSize;
         requestLayout();
     }
 
-    private void computePaths() {
-        computeCroppedProgressPath();
-        computeCroppedTextPath();
+    public void setStartMode(StartMode startPosition) {
+        this.startPosition = startPosition.getMode();
+        requestLayout();
     }
 }
