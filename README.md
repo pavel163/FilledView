@@ -52,6 +52,7 @@ Other configurable APIs:
 * `public void setTextSize(int textSize)`
 * `public void setRadius(int radius)`
 * `public void setStartMode(StartMode startPosition)`
+* `public void setBorderSize(int borderSize)`
 
 ## License
 MIT
