@@ -15,7 +15,7 @@ allprojects {
 
 ```gradle
 dependencies {
-    compile 'com.github.pavel163:FilledView:1.0.1'
+    compile 'com.github.pavel163:FilledView:1.1.0'
 }
 ```
 
