@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "com.ebr163.fillableview"
-        minSdkVersion 14
+        minSdkVersion project.ext.minSdkVersion
         targetSdkVersion project.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"

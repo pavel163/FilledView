@@ -17,7 +17,7 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Random rnd = new Random();
+    private final Random rnd = new Random();
     private FilledView filledViewLeft;
 
     @Override
