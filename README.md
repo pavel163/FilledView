@@ -19,7 +19,7 @@ dependencies {
 }
 ```
 
-## How to use (MIN API 19)
+## How to use (min api 19)
 
 ```xml
 <com.ebr163.view.FilledView
